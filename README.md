@@ -1,89 +1,86 @@
-# Personal Task Manager (To-Do List)
+# Manajer Tugas Pribadi (To-Do List)
 
-A simple, secure, and featured Personal Task Manager web application built with native PHP, MySQL, Bootstrap 5, and SweetAlert2.
+Aplikasi web Manajer Tugas sederhana, aman, dan kaya fitur yang dibangun dengan PHP native, MySQL, Bootstrap 5, dan SweetAlert2.
 
-## 🚀 Features
+## 🚀 Fitur Utama
 
--   **User Authentication**: Secure Login & Register with password hashing (`password_hash`) and validation.
--   **Session Management**: Persistent sessions and "Remember Me" functionality using cookies.
--   **Task Management (CRUD)**: Create, Read, Update, and Delete tasks.
--   **Pagination**: Efficiently browse through tasks with pagination support.
--   **Profile System**: Separate `profiles` table linked to users.
--   **Responsive Design**: Built with Bootstrap 5 for mobile-friendly usage.
--   **Interactive UI**: SweetAlert2 for beautiful alerts and confirmations.
--   **Security**:
-    -   PDO Prepared Statements for SQL injection prevention.
-    -   XSS protection (output escaping).
-    -   Password complexity enforcement (min 8 chars).
--   **Developer Friendly**:
-    -   Structured code with global/local variable scope comments.
-    -   Debug points (`// DEBUG: ...`) pre-placed for easy troubleshooting.
+-   **Autentikasi Pengguna**: Login & Registrasi Aman dengan hashing password (`password_hash`).
+    -   **Multi-Panel Login/Register**: Desain sliding UI modern untuk beralih antara login dan daftar.
+    -   **Fitur Ingat Saya**: Sesi persisten menggunakan cookie.
+    -   **Sapaan Personal**: Menyapa pengguna berdasarkan waktu (Pagi/Siang/Sore/Malam) dan status login pertama.
+-   **Manajemen Tugas (CRUD)**:
+    -   **Modal Interaktif**: Tambah dan Edit tugas menggunakan popup modal tanpa pindah halaman.
+    -   **Detail Tugas**: Judul, Deskripsi, Status, **Prioritas** (Tinggi/Sedang/Rendah), dan **Tenggat Waktu**.
+    -   **Update Status Cepat**: Ubah status tugas langsung dari tabel dashboard.
+-   **Organisasi & Tampilan**:
+    -   **Filter & Sortir**: Filter berdasarkan status dan urutkan berdasarkan Prioritas atau Tenggat Waktu.
+    -   **Pagination**: Navigasi halaman tugas dengan mudah.
+    -   **Desain Responsif**: Tampilan rapi di desktop maupun mobile dengan Bootstrap 5.
+-   **Notifikasi Cerdas**: Integrasi SweetAlert2 untuk pesan error, sukses, dan konfirmasi hapus yang estetik.
+-   **Keamanan**:
+    -   PDO Prepared Statements mencegah SQL injection.
+    -   Proteksi XSS (output escaping).
+    -   Validasi password kuat (min 8 karakter) di sisi klien dan server.
 
-## 🛠 Tech Stack
+## 🛠 Teknologi
 
--   **Frontend**: HTML5, Bootstrap 5, SweetAlert2.
--   **Backend**: Native PHP (PD0).
+-   **Frontend**: HTML5, CSS3 (Custom + Bootstrap 5), JavaScript (AJAX + SweetAlert2).
+-   **Backend**: Native PHP 8+.
 -   **Database**: MySQL.
 
-## 📂 Folder Structure
+## 📂 Struktur Folder
 
 ```
 project-root/
-├─ public/           # Public accessible files
-│  ├─ index.php      # Dashboard & Task List
-│  ├─ login.php      # Login Page
-│  ├─ register.php   # Registration Page
-│  ├─ ...            # Other actions
-│  └─ assets/        # CSS/JS
-├─ src/              # Backend Logic
-│  ├─ config.php     # DB Config & Constants
-│  ├─ db.php         # PDO Connection
-│  ├─ auth.php       # Authentication Helpers
-│  ├─ functions.php  # General Helpers
-│  └─ views/         # Layout Partials (header/footer)
-├─ sql/              # Database Schema
-│  └─ schema.sql
+├─ public/           # File yang dapat diakses publik
+│  ├─ dashboard.php  # Halaman Utama (Daftar Tugas) & Landing Page User
+│  ├─ login.php      # Halaman Autentikasi (Login & Register Gabungan)
+│  ├─ logout.php     # Skrip Logout
+│  ├─ migrate_v2.php # Skrip Migrasi (Prioritas & Tenggat Waktu)
+│  ├─ migrate_v3.php # Skrip Migrasi (Last Login)
+│  └─ css/           # File CSS Kustom
+├─ src/              # Logika Backend
+│  ├─ config.php     # Konfigurasi DB & Konstanta
+│  ├─ db.php         # Koneksi PDO
+│  ├─ auth.php       # Helper Autentikasi
+│  ├─ functions.php  # Helper Umum & Pagination
+│  └─ views/         # Potongan Layout (header/footer)
+├─ sql/              # Skema Database
+│  └─ skema.sql
 └─ README.md
 ```
 
-## ⚙️ Installation & Setup
+## ⚙️ Instalasi & Pengaturan
 
-1.  **Clone/Download** this repository to your web server root (e.g., `xampp/htdocs/ToDoList`).
-2.  **Database Setup**:
-    -   Create a new MySQL database named `todo_app` (or whatever you prefer).
-    -   Import `sql/schema.sql` into the database.
-3.  **Configuration**:
-    -   Open `src/config.php`.
-    -   Update `DB_NAME`, `DB_USER`, and `DB_PASS` to match your local environment.
-4.  **Run**:
-    -   Open your browser and navigate to `http://localhost/ToDoList/public/`.
+1.  **Clone/Download** repositori ini ke root web server Anda (misal: `xampp/htdocs/ToDoList`).
+2.  **Pengaturan Database**:
+    -   Buat database MySQL baru bernama `todolist` (atau sesuai keinginan).
+    -   Impor `sql/skema.sql` ke dalam database.
+3.  **Konfigurasi**:
+    -   Buka `src/config.php`.
+    -   Sesuaikan `DB_NAME`, `DB_USER`, dan `DB_PASS` dengan lingkungan lokal Anda.
+4.  **Jalankan**:
+    -   Buka browser dan akses `http://localhost/ToDoList/public/`.
+    -   Jika ini instalasi baru, mungkin perlu menjalankan skrip migrasi jika tabel belum lengkap (opsional, `skema.sql` sudah mencakup semua).
 
-## 📖 Usage Guide
+## 📖 Panduan Penggunaan
 
-### Registration
--   Go to the Register page.
--   Enter a valid email and a password (min 8 characters).
--   If valid, you will be redirected to Login.
-
-### Login
--   Enter credentials.
--   Check "Remember Me" to stay logged in across browser restarts.
+### Registrasi & Login
+-   Akses halaman utama, jika belum login akan diarahkan ke halaman Autentikasi.
+-   Gunakan panel kanan untuk **Daftar** akun baru.
+-   Gunakan panel kiri untuk **Masuk**.
+-   Centang "Ingat Saya" agar tidak perlu login ulang setiap membuka browser.
 
 ### Dashboard
--   View all your tasks.
--   Use pagination links at the bottom if you have many tasks.
--   Click "Add Task" to create new items.
--   Use "Edit" or "Delete" buttons on each task card/row.
+-   **Tambah Tugas**: Klik tombol "Buat Baru" di kanan atas.
+-   **Filter**: Gunakan dropdown di atas tabel untuk menyaring tugas berdasarkan status atau mengurutkannya.
+-   **Update Status**: Klik langsung pada kolom Status di tabel untuk mengubahnya (misal: dari "Akan Dilakukan" ke "Selesai").
+-   **Edit/Hapus**: Gunakan tombol aksi di sebelah kanan setiap baris tugas.
 
 ## 🐛 Debugging
 
-The code includes commented-out debug lines to help you understand the flow.
-Look for `// DEBUG:` comments in the source files.
-Example in `src/db.php`:
-```php
-// DEBUG: var_dump($pdo);
-```
-Uncomment these lines to inspect variables during runtime.
+Kode program dilengkapi dengan komentar (dalam Bahasa Indonesia) untuk memudahkan pemahaman alur.
+Cari komentar `// DEBUG:` di file sumber jika ingin mengaktifkan mode debug sederhana.
 
 ---
-**Created for Educational Purposes.**
+**Dibuat untuk Tujuan Edukasi.**

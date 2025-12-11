@@ -3,7 +3,7 @@
 require_once __DIR__ . '/../src/auth.php';
 require_once __DIR__ . '/../src/functions.php';
 
-// Redirect if logged in
+// Redirect jika sudah login
 if (auth_current_user()) {
     header("Location: dashboard.php");
     exit;
@@ -14,12 +14,12 @@ $successMessage = '';
 $username = '';
 $email = '';
 
-// Handle POST Requests
+// Tangani Request POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? 'login';
 
     if ($action === 'register') {
-        // --- REGISTER LOGIC (AJAX & Normal) ---
+        // --- LOGIKA REGISTRASI (AJAX & Normal) ---
         $username = trim($_POST['username'] ?? '');
         $email = trim($_POST['email'] ?? '');
         $password = $_POST['password'] ?? '';
@@ -43,14 +43,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        // Return JSON if AJAX request
+        // Kembalikan JSON jika request AJAX
         if (isset($_POST['ajax_register'])) {
             header('Content-Type: application/json');
             echo json_encode($response);
             exit;
         }
 
-        // Fallback for non-JS (preserves old logic behavior just in case)
+        // Fallback untuk non-JS (menjaga perilaku logika lama untuk jaga-jaga)
         if ($response['success']) {
             $successMessage = $response['message'];
             $mode = 'login'; 
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mode = 'register';
         }
     } else {
-        // --- LOGIN LOGIC ---
+        // --- LOGIKA LOGIN ---
         $username = trim($_POST['username'] ?? '');
         $password = $_POST['password'] ?? '';
         $remember = isset($_POST['remember']);
@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Determine active panel based on GET or previous POST error
+// Tentukan panel aktif berdasarkan GET atau error POST sebelumnya
 $mode = isset($mode) ? $mode : ($_GET['mode'] ?? 'login');
 $containerClass = ($mode === 'register') ? 'right-panel-active' : '';
 
@@ -220,14 +220,14 @@ require_once __DIR__ . '/../src/views/header.php';
         });
     });
 
-    // Check PHP Errors with SweetAlert
+    // Cek Error PHP dengan SweetAlert
     <?php if (isset($errors['register'])): ?>
         Swal.fire({
             icon: 'error',
             title: 'Oops...',
             text: '<?= $errors['register'] ?>',
             didClose: () => {
-                container.classList.add("right-panel-active"); // Ensure we stay on register panel
+                container.classList.add("right-panel-active"); // Pastikan tetap di panel register
             }
         });
     <?php endif; ?>
@@ -238,13 +238,13 @@ require_once __DIR__ . '/../src/views/header.php';
             title: 'Gagal Login',
             text: '<?= $errors['login'] ?>',
             didClose: () => {
-                container.classList.remove("right-panel-active"); // Ensure we stay on login panel
+                container.classList.remove("right-panel-active"); // Pastikan tetap di panel login
             }
         });
     <?php endif; ?>
 
-    // Client-side Validation for Register to prevent reload/slide
-    // AJAX Registration
+    // Validasi Client-side untuk Register mencegah reload/slide
+    // Registrasi AJAX
     const registerForm = document.querySelector('.sign-up-container form');
     registerForm.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -252,7 +252,7 @@ require_once __DIR__ . '/../src/views/header.php';
         const password = this.querySelector('input[name="password"]').value;
         const confirmValues = this.querySelector('input[name="confirm_password"]').value;
         
-        // Client-side quick checks
+        // Pengecekan cepat Client-side
         if (password.length < 8) {
             Swal.fire({ icon: 'warning', title: 'Password Lemah', text: 'Password minimal harus 8 karakter!' });
             return;
@@ -261,11 +261,11 @@ require_once __DIR__ . '/../src/views/header.php';
             return;
         }
 
-        // Prepare AJAX
+        // Siapkan AJAX
         const formData = new FormData(this);
         formData.append('ajax_register', '1');
 
-        // Show loading state (optional, but good UX)
+        // Tampilkan status loading (opsional, tapi UX bagus)
         const btn = this.querySelector('button[type="submit"]');
         const originalText = btn.innerText;
         btn.innerText = 'Loading...';
@@ -285,9 +285,9 @@ require_once __DIR__ . '/../src/views/header.php';
                     timer: 2000,
                     showConfirmButton: false
                 }).then(() => {
-                    // Slide to Login
+                    // Slide ke Login
                     container.classList.remove("right-panel-active");
-                    // Update URL state
+                    // Update state URL
                     history.pushState(null, null, '?mode=login');
                     // Reset form
                     registerForm.reset();
@@ -314,7 +314,7 @@ require_once __DIR__ . '/../src/views/header.php';
         });
     });
 
-    // Client-side Validation for Login (Optional but requested)
+    // Validasi Client-side untuk Login (Opsional tapi diminta)
     const loginForm = document.querySelector('.sign-in-container form');
     loginForm.addEventListener('submit', function(e) {
         const password = this.querySelector('input[name="password"]').value;

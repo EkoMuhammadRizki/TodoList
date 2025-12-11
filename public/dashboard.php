@@ -7,7 +7,7 @@ require_login();
 $user = auth_current_user();
 $title = 'Dashboard';
 
-// --- Handling Request Parameters for Filtering & Sorting ---
+// --- Menangani Parameter Request untuk Filter & Sortir ---
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 if ($page < 1) $page = 1;
 $perPage = 5;
@@ -16,20 +16,20 @@ $filter_status = $_GET['filter_status'] ?? '';
 $sort_by = $_GET['sort_by'] ?? 'created_at';
 $sort_order = $_GET['sort_order'] ?? 'DESC';
 
-// --- Handle Form Submissions ---
+// --- Menangani Pengiriman Form ---
 $errors = [];
 $titleInput = '';
 $description = '';
 $showModal = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // 1. Add Task Submission
+    // 1. Proses Tambah Tugas
     if (isset($_POST['add_task'])) {
         $titleInput = trim($_POST['title'] ?? '');
         $description = trim($_POST['description'] ?? '');
         $status = $_POST['status'] ?? 'todo';
         $priority = $_POST['priority'] ?? 'medium';
-        // Handle empty date as NULL
+        // Anggap tanggal kosong sebagai NULL
         $due_date = !empty($_POST['due_date']) ? $_POST['due_date'] : null;
         
         if (empty($titleInput)) {
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ]);
                 
                 set_flash('success', 'Tugas berhasil dibuat!');
-                // Reset POST to avoid resubmission on refresh
+                // Reset POST agar tidak tersubmit ulang saat refresh
                 header("Location: dashboard.php");
                 exit;
             } catch (PDOException $e) {
@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // 2. Direct Status Update
+    // 2. Update Status Langsung
     if (isset($_POST['update_status'])) {
         $taskId = (int)$_POST['task_id'];
         $newStatus = $_POST['status'];
@@ -74,12 +74,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 set_flash('error', 'Gagal update status.');
             }
         }
-        // Redirect keeping query params
+        // Redirect dengan tetap membawa parameter query (filter/sort)
         header("Location: dashboard.php?" . http_build_query($_GET));
         exit;
     }
 
-    // 3. Edit Task Submission
+    // 3. Proses Edit Tugas
     if (isset($_POST['update_task'])) {
         $id = (int)$_POST['task_id'];
         $title = trim($_POST['title']);
@@ -112,12 +112,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// --- Fetch Data ---
+// --- Ambil Data ---
 $pagination = get_tasks_paginated($pdo, $_SESSION['user_id'], $page, $perPage, $filter_status, $sort_by, $sort_order);
 $tasks = $pagination['data'];
 $totalPages = $pagination['last_page'];
 
-// Time-based Greeting Logic
+// Logika Sapaan Berdasarkan Waktu
 $hour = date('H');
 if ($hour >= 5 && $hour < 11) {
     $timeGreeting = 'Pagi 🌅';
@@ -242,7 +242,7 @@ require_once __DIR__ . '/../src/views/header.php';
                                 <form action="dashboard.php" method="POST" class="d-inline">
                                     <input type="hidden" name="update_status" value="1">
                                     <input type="hidden" name="task_id" value="<?= $task['id'] ?>">
-                                    <!-- Keep filters alive -->
+                                    <!-- Jaga filter tetap aktif -->
                                     <?php foreach($_GET as $key => $val): ?>
                                         <input type="hidden" name="<?= e($key) ?>" value="<?= e($val) ?>">
                                     <?php endforeach; ?>
@@ -436,7 +436,7 @@ function confirmDelete(id) {
 </div>
 
 <script>
-// Function to populate and open Edit Modal
+// Fungsi untuk mengisi dan membuka Modal Edit
 function openEditModal(task) {
     document.getElementById('edit_task_id').value = task.id;
     document.getElementById('edit_title').value = task.title;
@@ -449,7 +449,7 @@ function openEditModal(task) {
     editModal.show();
 }
 
-// Open modal if errors exist (from PHP)
+// Buka modal jika ada error (dari PHP)
 <?php if ($showModal): ?>
 document.addEventListener('DOMContentLoaded', function() {
     var myModal = new bootstrap.Modal(document.getElementById('addTaskModal'));
@@ -457,7 +457,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 <?php endif; ?>
 
-// Tooltip init
+// Inisialisasi Tooltip
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
   return new bootstrap.Tooltip(tooltipTriggerEl)
