@@ -26,7 +26,7 @@ Aplikasi web Manajer Tugas sederhana, aman, dan kaya fitur yang dibangun dengan 
 
 -   **Frontend**: HTML5, CSS3 (Custom + Bootstrap 5), JavaScript (AJAX + SweetAlert2).
 -   **Backend**: Native PHP 8+.
--   **Database**: MySQL.
+-   **Basis Data**: MySQL.
 
 ## 📂 Struktur Folder
 
@@ -36,8 +36,6 @@ project-root/
 │  ├─ dashboard.php  # Halaman Utama (Daftar Tugas) & Landing Page User
 │  ├─ login.php      # Halaman Autentikasi (Login & Register Gabungan)
 │  ├─ logout.php     # Skrip Logout
-│  ├─ migrate_v2.php # Skrip Migrasi (Prioritas & Tenggat Waktu)
-│  ├─ migrate_v3.php # Skrip Migrasi (Last Login)
 │  └─ css/           # File CSS Kustom
 ├─ src/              # Logika Backend
 │  ├─ config.php     # Konfigurasi DB & Konstanta
@@ -45,23 +43,22 @@ project-root/
 │  ├─ auth.php       # Helper Autentikasi
 │  ├─ functions.php  # Helper Umum & Pagination
 │  └─ views/         # Potongan Layout (header/footer)
-├─ sql/              # Skema Database
+├─ sql/              # Skema Basis Data
 │  └─ skema.sql
 └─ README.md
 ```
 
 ## ⚙️ Instalasi & Pengaturan
 
-1.  **Clone/Download** repositori ini ke root web server Anda (misal: `xampp/htdocs/ToDoList`).
-2.  **Pengaturan Database**:
+1.  **Clone/Unduh** repositori ini ke root web server Anda (misal: `xampp/htdocs/ToDoList`).
+2.  **Pengaturan Basis Data**:
     -   Buat database MySQL baru bernama `todolist` (atau sesuai keinginan).
-    -   Impor `sql/skema.sql` ke dalam database.
+    -   Impor `sql/skema.sql` ke dalam database Anda.
 3.  **Konfigurasi**:
     -   Buka `src/config.php`.
     -   Sesuaikan `DB_NAME`, `DB_USER`, dan `DB_PASS` dengan lingkungan lokal Anda.
 4.  **Jalankan**:
     -   Buka browser dan akses `http://localhost/ToDoList/public/`.
-    -   Jika ini instalasi baru, mungkin perlu menjalankan skrip migrasi jika tabel belum lengkap (opsional, `skema.sql` sudah mencakup semua).
 
 ## 📖 Panduan Penggunaan
 
@@ -77,10 +74,6 @@ project-root/
 -   **Update Status**: Klik langsung pada kolom Status di tabel untuk mengubahnya (misal: dari "Akan Dilakukan" ke "Selesai").
 -   **Edit/Hapus**: Gunakan tombol aksi di sebelah kanan setiap baris tugas.
 
-## 🐛 Debugging
-
-Kode program dilengkapi dengan komentar (dalam Bahasa Indonesia) untuk memudahkan pemahaman alur.
-Cari komentar `// DEBUG:` di file sumber jika ingin mengaktifkan mode debug sederhana.
 
 ---
-**Dibuat untuk Tujuan Edukasi.**
+**Dibuat Agar Hari Anda Lebih Terstruktur.**

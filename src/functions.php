@@ -9,7 +9,7 @@ function e($str) {
 }
 
 /**
- * Helper Pagination
+ * Pembantu Pagination (Halaman)
  * @param PDO $pdo
  * @param int $user_id
  * @param int $page
@@ -17,7 +17,7 @@ function e($str) {
  * @return array ['tasks' => array, 'total' => int, 'pages' => int]
  */
 function get_tasks_paginated($pdo, $user_id, $page = 1, $perPage = 5, $filter_status = '', $sort_by = 'created_at', $sort_order = 'DESC') {
-    // Whitelist sorting
+    // Whitelist pengurutan
     $allowed_sorts = ['created_at', 'due_date', 'priority'];
     if (!in_array($sort_by, $allowed_sorts)) {
         $sort_by = 'created_at';
@@ -27,19 +27,19 @@ function get_tasks_paginated($pdo, $user_id, $page = 1, $perPage = 5, $filter_st
     // Hitung offset
     $offset = ($page - 1) * $perPage;
     
-    // Base query
+    // Query dasar
     $sql = "SELECT * FROM tasks WHERE user_id = :uid";
     $params = [':uid' => $user_id];
     
-    // Filtering
+    // Penyaringan (Filter)
     if (!empty($filter_status) && in_array($filter_status, ['todo', 'doing', 'done'])) {
         $sql .= " AND status = :status";
         $params[':status'] = $filter_status;
     }
 
-    // Sorting
+    // Pengurutan (Sorting)
     if ($sort_by === 'priority') {
-        // High > Medium > Low
+        // Tinggi > Sedang > Rendah
         $sql .= " ORDER BY CASE priority 
                   WHEN 'high' THEN 1 
                   WHEN 'medium' THEN 2 
@@ -62,7 +62,7 @@ function get_tasks_paginated($pdo, $user_id, $page = 1, $perPage = 5, $filter_st
     
     $tasks = $stmt->fetchAll();
 
-    // 2. Ambil Total Baris (with filter)
+    // 2. Ambil Total Baris (dengan filter)
     $countSql = "SELECT COUNT(*) FROM tasks WHERE user_id = :uid";
     $countParams = [':uid' => $user_id];
     
@@ -87,7 +87,7 @@ function get_tasks_paginated($pdo, $user_id, $page = 1, $perPage = 5, $filter_st
 }
 
 /**
- * Helper Flash Message (untuk alert sederhana jika tidak pakai full JS)
+ * Pembantu Pesan Flash (untuk alert sederhana jika tidak pakai full JS)
  * Namun di sini kita akan mengandalkan return array ke view dan pakai JS.
  * Ini hanya helper untuk menyimpan pesan di session jika diperlukan.
  */

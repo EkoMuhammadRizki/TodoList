@@ -20,5 +20,5 @@ try {
     
 } catch (PDOException $e) {
     // Hentikan eksekusi jika koneksi DB gagal
-    die("DB Connection Failed: " . $e->getMessage());
+    die("Koneksi DB Gagal: " . $e->getMessage());
 }
