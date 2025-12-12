@@ -88,7 +88,7 @@ function get_tasks_paginated($pdo, $user_id, $page = 1, $perPage = 5, $filter_st
 
 /**
  * Pembantu Pesan Flash (untuk alert sederhana jika tidak pakai full JS)
- * Namun di sini kita akan mengandalkan return array ke view dan pakai JS.
+ * kita mengandalkan return array ke view dan pakai JS.
  * Ini hanya helper untuk menyimpan pesan di session jika diperlukan.
  */
 function set_flash($type, $message) {

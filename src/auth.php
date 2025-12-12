@@ -17,6 +17,7 @@ function auth_register($username, $email, $password) {
     $stmt->execute(['email' => $email, 'username' => $username]);
     
     // Debug mysqli_fetch_row di sini (baris 19)
+    // var_dump($stmt->fetch(PDO::FETCH_NUM)); die();
     if ($stmt->fetch()) {
         return ['success' => false, 'error' => 'Username atau Email sudah terdaftar.'];
     }
@@ -48,10 +49,14 @@ function auth_login($username, $password, $remember = false) {
     $stmt->execute(['username' => $username]);
     
     // Debug print_r di sini (baris 47) - Cek array params
+    // print_r(['username' => $username]); die();
+
     // Debug mysqli_fetch_assoc di sini (baris 48) - Cek hasil fetch
+    // var_dump($stmt->fetch(PDO::FETCH_ASSOC)); die();
     $user = $stmt->fetch();
     
     // Debug var_dump di sini (baris 51) - Cek isi variabel $user
+    // var_dump($user); die();
     
     // 1. Cek apakah username ada
     if (!$user) {

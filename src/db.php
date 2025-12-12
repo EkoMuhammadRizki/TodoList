@@ -16,8 +16,6 @@ try {
     // Buat instance PDO (GLOBAL)
     $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
     
-    // DEBUG: var_dump($pdo); // Uncomment untuk mengetes objek koneksi
-    
 } catch (PDOException $e) {
     // Hentikan eksekusi jika koneksi DB gagal
     die("Koneksi DB Gagal: " . $e->getMessage());
