@@ -55,7 +55,7 @@ function get_tasks_paginated($pdo, $user_id, $page = 1, $perPage = 5, $filter_st
     foreach ($params as $key => $val) {
         $stmt->bindValue($key, $val);
     }
-    // Bind limit/offset specifically as INT
+    // Bind limit/offset secara spesifik sebagai INT
     $stmt->bindValue(':lim', (int)$perPage, PDO::PARAM_INT);
     $stmt->bindValue(':off', (int)$offset, PDO::PARAM_INT);
     $stmt->execute();

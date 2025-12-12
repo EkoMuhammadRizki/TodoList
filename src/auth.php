@@ -11,6 +11,11 @@ require_once __DIR__ . '/db.php';
  */
 function auth_register($username, $email, $password) {
     global $pdo; // Akses koneksi DB global
+
+    // Validasi Username (Hanya Huruf dan Angka)
+    if (!preg_match('/^[a-zA-Z0-9]+$/', $username)) {
+        return ['success' => false, 'error' => 'Username hanya boleh berisi huruf dan angka.'];
+    }
     
     // Cek apakah username atau email sudah terdaftar
     $stmt = $pdo->prepare("SELECT id FROM users WHERE email = :email OR username = :username");

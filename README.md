@@ -8,6 +8,11 @@ Aplikasi web Manajer Tugas sederhana, aman, dan kaya fitur yang dibangun dengan 
     -   **Multi-Panel Login/Register**: Desain sliding UI modern untuk beralih antara login dan daftar.
     -   **Fitur Ingat Saya**: Sesi persisten menggunakan cookie.
     -   **Sapaan Personal**: Menyapa pengguna berdasarkan waktu (Pagi/Siang/Sore/Malam) dan status login pertama.
+    -   **Validasi Username**: Username hanya boleh mengandung huruf dan angka (alphanumeric).
+    -   **Layar Loading**: Indikator loading yang halus saat proses login.
+-   **Pengalaman Pengguna (UX/UI)**:
+    -   **Landing Page**: Halaman muka yang informatif dan menarik.
+    -   **Splash Screen**: Efek intro yang elegan saat pertama kali membuka aplikasi.
 -   **Manajemen Tugas (CRUD)**:
     -   **Modal Interaktif**: Tambah dan Edit tugas menggunakan popup modal tanpa pindah halaman.
     -   **Detail Tugas**: Judul, Deskripsi, Status, **Prioritas** (Tinggi/Sedang/Rendah), dan **Tenggat Waktu**.
@@ -33,14 +38,15 @@ Aplikasi web Manajer Tugas sederhana, aman, dan kaya fitur yang dibangun dengan 
 ```
 project-root/
 ├─ public/           # File yang dapat diakses publik
-│  ├─ dashboard.php  # Halaman Utama (Daftar Tugas) & Landing Page User
+│  ├─ dashboard.php  # Halaman Utama (Daftar Tugas)
+│  ├─ index.php      # Landing Page & Splash Screen
 │  ├─ login.php      # Halaman Autentikasi (Login & Register Gabungan)
 │  ├─ logout.php     # Skrip Logout
 │  └─ css/           # File CSS Kustom
 ├─ src/              # Logika Backend
 │  ├─ config.php     # Konfigurasi DB & Konstanta
 │  ├─ db.php         # Koneksi PDO
-│  ├─ auth.php       # Helper Autentikasi
+│  ├─ auth.php       # Helper Autentikasi & Validasi
 │  ├─ functions.php  # Helper Umum & Pagination
 │  └─ views/         # Potongan Layout (header/footer)
 ├─ sql/              # Skema Basis Data

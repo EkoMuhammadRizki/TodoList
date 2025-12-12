@@ -1,6 +1,6 @@
 <?php
 // public/index.php
-// LANDING PAGE
+// HALAMAN LANDING
 require_once __DIR__ . '/../src/auth.php';
 require_once __DIR__ . '/../src/functions.php';
 
@@ -14,7 +14,7 @@ require_once __DIR__ . '/../src/views/header.php';
 ?>
 
 
-<!-- SPLASH SCREEN -->
+<!-- LAYAR SPLASH -->
 <style>
     #splash-screen {
         position: fixed;
@@ -81,12 +81,12 @@ require_once __DIR__ . '/../src/views/header.php';
         }, 2000); 
     });
 </script>
-<!-- END SPLASH SCREEN -->
+<!-- AKHIR LAYAR SPLASH -->
 
 <div class="row align-items-center justify-content-center" style="min-height: 80vh;">
     <div class="col-lg-8 text-center fade-in">
         <div class="mb-4">
-            <!-- Custom Todo-Manager SVG Illustration -->
+            <!-- Ilustrasi SVG Todo-Manager Kustom -->
             <svg width="150" height="150" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-primary hero-icon">
                 <path d="M9 5H7C5.89543 5 5 5.89543 5 7V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V7C19 5.89543 18.1046 5 17 5H15M9 5C9 6.10457 9.89543 7 11 7H13C14.1046 7 15 6.10457 15 5M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5M9 14L10.5 15.5L14.5 11.5M9 18L10.5 19.5L14.5 15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>

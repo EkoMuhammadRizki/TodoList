@@ -39,10 +39,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (empty($username) || empty($email) || empty($password)) {
             $response['message'] = 'Semua kolom wajib diisi.';
         } elseif (strlen($password) < 8) {
-             // Register Validation Rule 1
+             // Aturan Validasi Registrasi 1
             $response['message'] = 'Password minimal 8 karakter.';
         } elseif ($password !== $confirmPassword) {
-             // Register Validation Rule 2 (Simpler to combine logic here if needed, but handled by JS mostly)
+             // Aturan Validasi Registrasi 2 (Lebih sederhana digabung di sini jika perlu, tapi sebagian besar ditangani oleh JS)
             $response['message'] = 'Konfirmasi password tidak valid atau kurang dari 8 karakter.';
         } else {
             $result = auth_register($username, $email, $password);
@@ -169,7 +169,7 @@ require_once __DIR__ . '/../src/views/header.php';
             <div class="social-container mb-3"></div>
             <span class="text-muted small mb-3">Gunakan email dan username unik</span>
             
-            <input type="text" name="username" placeholder="Username" class="form-control mb-2" value="<?= e($username) ?>" />
+            <input type="text" name="username" placeholder="Username (Huruf & Angka)" pattern="[a-zA-Z0-9]+" title="Hanya huruf dan angka diperbolehkan" class="form-control mb-2" value="<?= e($username) ?>" />
             <input type="email" name="email" placeholder="Email" class="form-control mb-2" value="<?= e($email) ?>" />
             <div class="input-group mb-2">
                 <input type="password" name="password" placeholder="Password (Min 8)" class="form-control border-end-0 rounded-start" />
@@ -196,7 +196,7 @@ require_once __DIR__ . '/../src/views/header.php';
             <h2 class="fw-bold mb-3 text-primary">Selamat Datang</h2>
             <span class="text-muted small mb-4">Masuk dengan akun Anda</span>
             
-            <input type="text" name="username" placeholder="Username" class="form-control mb-3" value="<?= htmlspecialchars($username) ?>" />
+            <input type="text" name="username" placeholder="Username" pattern="[a-zA-Z0-9]+" title="Hanya huruf dan angka diperbolehkan" class="form-control mb-3" value="<?= htmlspecialchars($username) ?>" />
             <div class="input-group mb-3">
                 <input type="password" name="password" placeholder="Password" class="form-control border-end-0 rounded-start" />
                 <span class="input-group-text bg-white border-start-0 toggle-password" style="cursor: pointer; border-radius: 0 0.5rem 0.5rem 0;">
@@ -254,7 +254,7 @@ require_once __DIR__ . '/../src/views/header.php';
         }
     }
 
-    // Toggle Password Visibility
+    // Alihkan Visibilitas Password
     document.querySelectorAll('.toggle-password').forEach(button => {
         button.addEventListener('click', function() {
             const input = this.previousElementSibling;
@@ -271,9 +271,9 @@ require_once __DIR__ . '/../src/views/header.php';
         });
     });
 
-    // --- SweetAlert Logic ---
+    // --- Logika SweetAlert ---
 
-    // 1. Error Register
+    // 1. Error Registrasi
     <?php if (isset($errors['register'])): ?>
         Swal.fire({
             icon: 'error',
@@ -320,7 +320,7 @@ require_once __DIR__ . '/../src/views/header.php';
     <?php endif; ?>
 
 
-    // --- Client Side Validation (Register Only) ---
+    // --- Validasi Sisi Klien (Registrasi Saja) ---
     const registerForm = document.querySelector('.sign-up-container form');
     registerForm.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -328,6 +328,17 @@ require_once __DIR__ . '/../src/views/header.php';
         const username = this.querySelector('input[name="username"]').value;
         const password = this.querySelector('input[name="password"]').value;
         const confirmValues = this.querySelector('input[name="confirm_password"]').value;
+        
+        // Aturan Register: Username Alphanumeric
+        const usernameRegex = /^[a-zA-Z0-9]+$/;
+        if (!usernameRegex.test(username)) {
+             Swal.fire({ 
+                icon: 'warning', 
+                title: 'Username Tidak Valid', 
+                text: 'Username hanya boleh berisi huruf dan angka.' 
+            });
+            return;
+        }
         
         // Aturan Register: Password minimal 8 karakter
         if (password.length < 8) {
@@ -349,7 +360,7 @@ require_once __DIR__ . '/../src/views/header.php';
             return;
         }
 
-        // AJAX Register
+        // Register AJAX
         const formData = new FormData(this);
         formData.append('ajax_register', '1');
 
@@ -394,7 +405,7 @@ require_once __DIR__ . '/../src/views/header.php';
         });
     });
 
-    // --- AJAX LOGIN HANDLER (For Loading Screen) ---
+    // --- PENANGAN LOGIN AJAX (Untuk Layar Loading) ---
     const loginForm = document.querySelector('.sign-in-container form');
     loginForm.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -419,7 +430,7 @@ require_once __DIR__ . '/../src/views/header.php';
                 const progressBar = document.getElementById('login-progress-bar');
                 loader.style.display = 'flex';
                 
-                // Animate Progress Bar
+                // Animasi Progress Bar
                 setTimeout(() => {
                     progressBar.style.width = '100%';
                 }, 100);
@@ -429,7 +440,7 @@ require_once __DIR__ . '/../src/views/header.php';
                     window.location.href = data.redirect;
                 }, 2000);
             } else {
-                // Error Handling via SweetAlert
+                // Penanganan Error via SweetAlert
                 let title = 'Gagal Login';
                 if (data.error_type === 'user_not_found') title = 'Gagal Masuk';
                 if (data.error_type === 'invalid_password') title = 'Gagal Login';
@@ -501,6 +512,6 @@ require_once __DIR__ . '/../src/views/header.php';
         <div id="login-progress-bar"></div>
     </div>
 </div>
-<!-- END LOADING SCREEN -->
+<!-- AKHIR LAYAR LOADING -->
 
 <?php require_once __DIR__ . '/../src/views/footer.php'; ?>
